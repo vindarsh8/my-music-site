@@ -1,31 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Music</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    body {
+      background: #0a0a0a;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+    }
+
+    .cover {
+      width: 100%;
+      max-width: 220px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 18px;
+      margin-bottom: 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #9a9a9a;
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+
+    .track-card {
+      background: #141414;
+      border: 1px solid #222;
+      border-radius: 18px;
+      padding: 22px;
+      text-align: left;
+    }
+
+    .track-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    audio {
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    .links {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .links a {
+      color: #bdbdbd;
+      text-decoration: none;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    .links a:hover {
+      color: white;
+    }
+  </style>
 </head>
 <body>
-
   <div class="container">
-    <img src="covers/album-cover.jpg" alt="Album Cover" class="cover">
+    <img src="covers/album-cover.jpg" alt="Album Cover" class="cover" />
 
-    <h1></h1>
-    <p class="bio">
-      v. Welcome to my music space.
-    </p>
+    <h1>Your Artist Name</h1>
+    <p class="subtitle">Independent artist • unreleased demos • private listening</p>
 
-    <div class="track">
-      <h2>Falling Free</h2>
+    <div class="track-card">
+      <div class="track-title">demo 2</div>
       <audio controls>
-        <source src="songs/demo 2.mp3" type="audio/mpeg">
-        Your browser does not support audio.
+        <source src="songs/demo 2.mp3" type="audio/mpeg" />
+        Your browser does not support the audio player.
       </audio>
     </div>
 
-  
+    <div class="links">
+      <a href="#">Instagram</a>
+      <a href="#">Spotify</a>
+      <a href="#">YouTube</a>
+    </div>
   </div>
-
 </body>
 </html>
