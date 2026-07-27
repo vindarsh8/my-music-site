@@ -1,1 +1,349 @@
-console.log("Music website loaded");
+/* ===========================================
+   APPLE MUSIC STYLE.CSS - PART 1
+   =========================================== */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:#000;
+color:#fff;
+font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
+overflow-x:hidden;
+min-height:100vh;
+}
+
+/* ----------------------------- */
+/* BACKGROUND */
+/* ----------------------------- */
+
+.background{
+position:fixed;
+inset:0;
+pointer-events:none;
+overflow:hidden;
+}
+
+.background::before{
+content:"";
+position:absolute;
+width:900px;
+height:900px;
+border-radius:50%;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+background:
+radial-gradient(circle,
+rgba(255,255,255,.06),
+transparent 70%);
+filter:blur(80px);
+animation:glow 12s ease-in-out infinite;
+}
+
+@keyframes glow{
+
+0%{
+transform:translate(-50%,-50%) scale(1);
+}
+
+50%{
+transform:translate(-50%,-50%) scale(1.2);
+}
+
+100%{
+transform:translate(-50%,-50%) scale(1);
+}
+
+}
+
+/* ----------------------------- */
+/* LOCKSCREEN */
+/* ----------------------------- */
+
+#lockscreen{
+
+position:fixed;
+inset:0;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:#000;
+
+z-index:999;
+
+transition:.45s;
+
+}
+
+.lockBox{
+
+width:360px;
+max-width:92%;
+
+padding:45px;
+
+border-radius:34px;
+
+background:
+
+rgba(255,255,255,.05);
+
+backdrop-filter:blur(28px);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+
+0 25px 80px rgba(0,0,0,.55);
+
+text-align:center;
+
+animation:appear .8s ease;
+
+}
+
+@keyframes appear{
+
+from{
+
+opacity:0;
+transform:translateY(30px);
+
+}
+
+to{
+
+opacity:1;
+transform:translateY(0);
+
+}
+
+}
+
+.lockIcon{
+
+font-size:56px;
+
+margin-bottom:22px;
+
+}
+
+.lockBox h1{
+
+font-size:34px;
+
+font-weight:700;
+
+margin-bottom:10px;
+
+letter-spacing:-1px;
+
+}
+
+.lockBox p{
+
+color:#9d9d9d;
+
+font-size:15px;
+
+margin-bottom:34px;
+
+}
+
+/* ----------------------------- */
+/* PASSCODE */
+/* ----------------------------- */
+
+#dots{
+
+display:flex;
+
+justify-content:center;
+
+gap:18px;
+
+margin-bottom:24px;
+
+}
+
+.dot{
+
+width:18px;
+height:18px;
+
+border-radius:50%;
+
+border:2px solid rgba(255,255,255,.6);
+
+transition:.25s;
+
+}
+
+.dot.active{
+
+background:#fff;
+
+border-color:#fff;
+
+transform:scale(1.1);
+
+}
+
+#wrong{
+
+height:18px;
+
+font-size:14px;
+
+color:#ff5f5f;
+
+opacity:0;
+
+transition:.25s;
+
+margin-bottom:12px;
+
+}
+
+#pin{
+
+position:absolute;
+
+opacity:0;
+
+pointer-events:none;
+
+}
+
+/* ----------------------------- */
+/* SHAKE */
+/* ----------------------------- */
+
+.shake{
+
+animation:shake .45s;
+
+}
+
+@keyframes shake{
+
+0%{transform:translateX(0);}
+20%{transform:translateX(-12px);}
+40%{transform:translateX(12px);}
+60%{transform:translateX(-10px);}
+80%{transform:translateX(10px);}
+100%{transform:translateX(0);}
+
+}
+
+/* ----------------------------- */
+/* PAGE */
+/* ----------------------------- */
+
+#page{
+
+opacity:0;
+
+pointer-events:none;
+
+transition:.6s;
+
+max-width:520px;
+
+margin:auto;
+
+padding:50px 20px 90px;
+
+}
+
+/* ----------------------------- */
+/* HEADER */
+/* ----------------------------- */
+
+header{
+
+text-align:center;
+
+margin-bottom:50px;
+
+}
+
+.cover{
+
+width:240px;
+
+height:240px;
+
+margin:auto;
+
+border-radius:28px;
+
+overflow:hidden;
+
+box-shadow:
+
+0 25px 80px rgba(0,0,0,.65);
+
+animation:float 8s ease-in-out infinite;
+
+}
+
+.cover img{
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+display:block;
+
+}
+
+@keyframes float{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-10px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+header h2{
+
+font-size:38px;
+
+font-weight:700;
+
+margin-top:28px;
+
+letter-spacing:-1px;
+
+}
+
+header p{
+
+margin-top:10px;
+
+color:#9a9a9a;
+
+font-size:15px;
+
+}
