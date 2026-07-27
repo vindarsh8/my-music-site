@@ -136,10 +136,76 @@ autocomplete="off">
 
 </section>
 
+<!-- Bottom Player -->
+
+<div id="player">
+
+    <div id="playerInfo">
+
+        <div id="miniVinyl">
+
+            <div class="miniLabel"></div>
+
+        </div>
+
+        <div>
+
+            <h3 id="currentSong">
+
+                Select a song
+
+            </h3>
+
+            <p>
+
+                Private Listening
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div id="controls">
+
+        <button id="prev">⏮</button>
+
+        <button id="play">▶</button>
+
+        <button id="next">⏭</button>
+
+    </div>
+
+    <div id="progressContainer">
+
+        <span id="currentTime">
+
+            0:00
+
+        </span>
+
+        <input
+        id="progress"
+        type="range"
+        value="0"
+        min="0"
+        max="100">
+
+        <span id="duration">
+
+            0:00
+
+        </span>
+
+    </div>
+
+</div>
+
+<audio id="audio"></audio>
+
 </div>
 
 <script src="script.js"></script>
-
 </body>
 
 </html>
