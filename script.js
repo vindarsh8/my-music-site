@@ -3,7 +3,7 @@
 ================================ */
 
 // Change this to whatever 4-digit code you want
-const PASSCODE = "0000";
+const PASSCODE = "1234";
 
 /* ===============================
    ELEMENT REFERENCES
