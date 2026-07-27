@@ -146,7 +146,7 @@ function animateSongs() {
 // ONLY ONE AUDIO PLAYS
 // =========================
 const players = document.querySelectorAll("audio");
-
+const vinyl = document.getElementById("vinyl");
 players.forEach(player => {
 
     player.addEventListener("play", () => {
