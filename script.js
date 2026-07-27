@@ -1,419 +1,331 @@
-/* ===========================================
-   APPLE MUSIC SCRIPT.JS - PART 1
-   =========================================== */
+/* ===============================
+   CONFIG
+================================ */
 
-// =========================
-// CHANGE THIS TO YOUR PIN
-// =========================
+// Change this to whatever 4-digit code you want
 const PASSCODE = "0000";
 
-// =========================
-// ELEMENTS
-// =========================
-const pinInput = document.getElementById("pin");
-const dots = document.querySelectorAll(".dot");
-const lockscreen = document.getElementById("lockscreen");
-const page = document.getElementById("page");
-const wrong = document.getElementById("wrong");
-const lockBox = document.querySelector(".lockBox");
+/* ===============================
+   ELEMENT REFERENCES
+================================ */
 
-// =========================
-// FOCUS INPUT
-// =========================
-window.addEventListener("load", () => {
-    pinInput.focus();
-});
+const lockscreen   = document.getElementById("lockscreen");
+const app          = document.getElementById("app");
+const pinInput     = document.getElementById("pin");
+const dots         = document.querySelectorAll(".dot");
+const errorMsg     = document.getElementById("error");
 
-document.addEventListener("click", () => {
-    pinInput.focus();
-});
+const vinyl        = document.getElementById("vinyl");
+const miniVinyl    = document.getElementById("miniVinyl");
 
-// =========================
-// UPDATE DOTS
-// =========================
-function updateDots() {
+const songEls      = document.querySelectorAll(".song");
+const audio        = document.getElementById("audio");
 
-    dots.forEach(dot => {
-        dot.classList.remove("active");
-    });
+const currentTitle = document.getElementById("currentTitle");
+const playBtn      = document.getElementById("play");
+const playIcon     = document.getElementById("playIcon");
+const prevBtn      = document.getElementById("prev");
+const nextBtn      = document.getElementById("next");
 
-    for (let i = 0; i < pinInput.value.length; i++) {
-        dots[i].classList.add("active");
-    }
+const progress     = document.getElementById("progress");
+const currentTime  = document.getElementById("currentTime");
+const duration     = document.getElementById("duration");
 
-}
+/* ===============================
+   ICON PATHS (play <-> pause)
+================================ */
 
-// =========================
-// SHAKE ERROR
-// =========================
-function wrongPin() {
+const PLAY_PATH  = "M8 5v14l11-7z";
+const PAUSE_PATH = "M6 5h4v14H6zm8 0h4v14h-4z";
 
-    lockBox.classList.add("shake");
+/* ===============================
+   STATE
+================================ */
 
-    wrong.style.opacity = "1";
-
-    setTimeout(() => {
-
-        lockBox.classList.remove("shake");
-
-        wrong.style.opacity = "0";
-
-        pinInput.value = "";
-
-        updateDots();
-
-    }, 700);
-
-}
-
-// =========================
-// UNLOCK
-// =========================
-function unlock() {
-
-    lockscreen.classList.add("fadeOut");
-
-    setTimeout(() => {
-
-        lockscreen.style.display = "none";
-
-        page.classList.add("fadeIn");
-
-        animateSongs();
-
-    }, 500);
-
-}
-
-// =========================
-// CHECK PIN
-// =========================
-pinInput.addEventListener("input", () => {
-
-    pinInput.value = pinInput.value.replace(/\D/g, "");
-
-    updateDots();
-
-    if (pinInput.value.length === 4) {
-
-        if (pinInput.value === PASSCODE) {
-
-            unlock();
-
-        } else {
-
-            wrongPin();
-
-        }
-
-    }
-
-});
-
-// =========================
-// KEEP INPUT FOCUSED
-// =========================
-setInterval(() => {
-
-    if (document.activeElement !== pinInput) {
-
-        pinInput.focus();
-
-    }
-
-}, 500);
-
-// =========================
-// SONG ANIMATION
-// =========================
-function animateSongs() {
-
-    const songs = document.querySelectorAll(".song");
-
-    songs.forEach((song, index) => {
-
-        setTimeout(() => {
-
-            song.classList.add("show");
-
-        }, index * 120);
-
-    });
-
-}
-
-// =========================
-// ONLY ONE AUDIO PLAYS
-// =========================
-/* ===========================================
-   APPLE MUSIC PLAYER
-=========================================== */
-
-const songs = [...document.querySelectorAll(".song")];
-
-const audio = document.getElementById("audio");
-
-const playBtn = document.getElementById("play");
-const prevBtn = document.getElementById("prev");
-const nextBtn = document.getElementById("next");
-
-const progress = document.getElementById("progress");
-
-const currentTime = document.getElementById("currentTime");
-const duration = document.getElementById("duration");
-
-const currentSong = document.getElementById("currentSong");
-
-const vinyl = document.getElementById("vinyl");
-const miniVinyl = document.getElementById("miniVinyl");
+let songs = Array.from(songEls).map(el => ({
+	el,
+	title: el.dataset.title,
+	src: el.dataset.src
+}));
 
 let currentIndex = -1;
+let isPlaying = false;
 
+/* ===============================
+   LOCK SCREEN LOGIC
+================================ */
 
+let enteredPin = "";
 
-// -----------------------
-// LOAD SONG
-// -----------------------
-
-function loadSong(index){
-
-    currentIndex = index;
-
-    const song = songs[index];
-
-    audio.src = song.dataset.src;
-
-    currentSong.textContent =
-        song.querySelector("h3").textContent;
-
-    songs.forEach(s=>s.classList.remove("active"));
-
-    song.classList.add("active");
-
+function updateDots(){
+	dots.forEach((dot, i) => {
+		dot.classList.toggle("active", i < enteredPin.length);
+	});
 }
 
+function showError(){
+	errorMsg.style.opacity = "1";
+	lockscreen.style.transform = "translateX(0)";
 
+	// simple shake
+	lockscreen.animate(
+		[
+			{ transform: "translateX(0)" },
+			{ transform: "translateX(-10px)" },
+			{ transform: "translateX(10px)" },
+			{ transform: "translateX(-6px)" },
+			{ transform: "translateX(6px)" },
+			{ transform: "translateX(0)" }
+		],
+		{ duration: 350 }
+	);
 
-// -----------------------
-// PLAY
-// -----------------------
-
-function playSong(){
-
-    audio.play();
-
-    playBtn.textContent = "❚❚";
-
-    vinyl.classList.add("spinning");
-
-    miniVinyl.classList.add("rotate");
-
+	setTimeout(() => {
+		enteredPin = "";
+		updateDots();
+		errorMsg.style.opacity = "0";
+	}, 500);
 }
 
+function unlockApp(){
+	lockscreen.style.opacity = "0";
+	setTimeout(() => {
+		lockscreen.style.display = "none";
+	}, 450);
 
-
-// -----------------------
-// PAUSE
-// -----------------------
-
-function pauseSong(){
-
-    audio.pause();
-
-    playBtn.textContent = "▶";
-
-    vinyl.classList.remove("spinning");
-
-    miniVinyl.classList.remove("rotate");
-
+	app.style.opacity = "1";
 }
 
+function handlePinInput(value){
+	enteredPin = value.slice(0, 4);
+	updateDots();
 
+	if(enteredPin.length === 4){
+		if(enteredPin === PASSCODE){
+			unlockApp();
+		} else {
+			showError();
+		}
+	}
+}
 
-// -----------------------
-// CLICK SONG
-// -----------------------
-
-songs.forEach((song,index)=>{
-
-    song.onclick=()=>{
-
-        loadSong(index);
-
-        playSong();
-
-    }
-
+pinInput.addEventListener("input", () => {
+	// only allow digits
+	const digits = pinInput.value.replace(/\D/g, "");
+	pinInput.value = digits;
+	handlePinInput(digits);
 });
 
-
-
-// -----------------------
-// PLAY BUTTON
-// -----------------------
-
-playBtn.onclick=()=>{
-
-    if(currentIndex===-1){
-
-        loadSong(0);
-
-    }
-
-    if(audio.paused){
-
-        playSong();
-
-    }else{
-
-        pauseSong();
-
-    }
-
-}
-
-
-
-// -----------------------
-// NEXT
-// -----------------------
-
-nextBtn.onclick=()=>{
-
-    currentIndex++;
-
-    if(currentIndex>=songs.length){
-
-        currentIndex=0;
-
-    }
-
-    loadSong(currentIndex);
-
-    playSong();
-
-}
-
-
-
-// -----------------------
-// PREVIOUS
-// -----------------------
-
-prevBtn.onclick=()=>{
-
-    currentIndex--;
-
-    if(currentIndex<0){
-
-        currentIndex=songs.length-1;
-
-    }
-
-    loadSong(currentIndex);
-
-    playSong();
-
-}
-
-
-
-// -----------------------
-// PROGRESS
-// -----------------------
-
-audio.addEventListener("timeupdate",()=>{
-
-    if(audio.duration){
-
-        progress.value=
-        audio.currentTime/audio.duration*100;
-
-        currentTime.textContent=format(audio.currentTime);
-
-        duration.textContent=format(audio.duration);
-
-    }
-
+// Focus hidden input whenever the lockscreen is clicked/tapped
+lockscreen.addEventListener("click", () => {
+	pinInput.focus();
 });
 
-
-
-progress.oninput=()=>{
-
-    if(audio.duration){
-
-        audio.currentTime=
-        progress.value/100*audio.duration;
-
-    }
-
-}
-
-
-
-// -----------------------
-// FORMAT TIME
-// -----------------------
-
-function format(sec){
-
-    const m=Math.floor(sec/60);
-
-    const s=Math.floor(sec%60);
-
-    return `${m}:${s.toString().padStart(2,"0")}`;
-
-}
-
-
-
-// -----------------------
-// SONG ENDED
-// -----------------------
-
-audio.onended=()=>{
-
-    nextBtn.click();
-
-}
-
-
-
-// -----------------------
-// SPACEBAR
-// -----------------------
-
-window.addEventListener("keydown",(e)=>{
-
-    if(e.code==="Space"){
-
-        e.preventDefault();
-
-        playBtn.click();
-
-    }
-
+// Auto-focus on load
+window.addEventListener("load", () => {
+	pinInput.focus();
 });
 
+// Keep focus on the pin input if it's lost while locked
+document.addEventListener("click", () => {
+	if(lockscreen.style.display !== "none"){
+		pinInput.focus();
+	}
+});
 
+/* ===============================
+   TIME FORMATTING
+================================ */
 
-// -----------------------
-// LEFT / RIGHT
-// -----------------------
+function formatTime(seconds){
+	if(isNaN(seconds) || seconds === Infinity) return "0:00";
 
-window.addEventListener("keydown",(e)=>{
+	const mins = Math.floor(seconds / 60);
+	const secs = Math.floor(seconds % 60);
 
-    if(e.key==="ArrowRight"){
+	return `${mins}:${secs.toString().padStart(2, "0")}`;
+}
 
-        nextBtn.click();
+/* ===============================
+   VINYL SPIN CONTROL
+================================ */
 
-    }
+function setSpinning(spin){
+	vinyl.style.animationPlayState = spin ? "running" : "paused";
+	miniVinyl.querySelector(".miniCentre");
 
-    if(e.key==="ArrowLeft"){
+	if(spin){
+		vinyl.classList.add("spinning");
+		miniVinyl.classList.add("rotate");
+	} else {
+		vinyl.style.animationPlayState = "paused";
+	}
 
-        prevBtn.click();
+	// pause/resume rather than remove, so rotation position is kept
+	vinyl.style.animationPlayState = spin ? "running" : "paused";
+	miniVinyl.style.animationPlayState = spin ? "running" : "paused";
+}
 
-    }
+/* ===============================
+   PLAY / PAUSE ICON
+================================ */
 
+function setPlayIcon(playing){
+	playIcon.setAttribute("d", playing ? PAUSE_PATH : PLAY_PATH);
+	playBtn.setAttribute("aria-label", playing ? "Pause" : "Play");
+}
+
+/* ===============================
+   LOAD & PLAY A SONG
+================================ */
+
+function loadSong(index, autoplay = true){
+	if(index < 0 || index >= songs.length) return;
+
+	currentIndex = index;
+	const song = songs[currentIndex];
+
+	audio.src = song.src;
+	currentTitle.textContent = song.title;
+
+	songEls.forEach(el => el.classList.remove("active"));
+	song.el.classList.add("active");
+
+	progress.value = 0;
+	currentTime.textContent = "0:00";
+	duration.textContent = "0:00";
+
+	if(autoplay){
+		playAudio();
+	}
+}
+
+function playAudio(){
+	audio.play().then(() => {
+		isPlaying = true;
+		setPlayIcon(true);
+		setSpinning(true);
+	}).catch(() => {
+		// autoplay might be blocked, ignore
+	});
+}
+
+function pauseAudio(){
+	audio.pause();
+	isPlaying = false;
+	setPlayIcon(false);
+	setSpinning(false);
+}
+
+function togglePlay(){
+	if(currentIndex === -1){
+		loadSong(0);
+		return;
+	}
+
+	if(isPlaying){
+		pauseAudio();
+	} else {
+		playAudio();
+	}
+}
+
+function playNext(){
+	if(songs.length === 0) return;
+	const nextIndex = (currentIndex + 1) % songs.length;
+	loadSong(nextIndex);
+}
+
+function playPrev(){
+	if(songs.length === 0) return;
+	const prevIndex = (currentIndex - 1 + songs.length) % songs.length;
+	loadSong(prevIndex);
+}
+
+/* ===============================
+   EVENT: SONG LIST CLICK
+================================ */
+
+songEls.forEach((el, index) => {
+	el.addEventListener("click", () => {
+		loadSong(index);
+	});
+});
+
+/* ===============================
+   EVENT: CONTROLS
+================================ */
+
+playBtn.addEventListener("click", togglePlay);
+nextBtn.addEventListener("click", playNext);
+prevBtn.addEventListener("click", playPrev);
+
+/* ===============================
+   EVENT: AUDIO TIME UPDATES
+================================ */
+
+audio.addEventListener("loadedmetadata", () => {
+	duration.textContent = formatTime(audio.duration);
+	progress.max = 100;
+});
+
+audio.addEventListener("timeupdate", () => {
+	if(audio.duration){
+		const percent = (audio.currentTime / audio.duration) * 100;
+		progress.value = percent;
+	}
+	currentTime.textContent = formatTime(audio.currentTime);
+});
+
+audio.addEventListener("ended", () => {
+	playNext();
+});
+
+/* ===============================
+   EVENT: PROGRESS BAR SEEK
+================================ */
+
+progress.addEventListener("input", () => {
+	if(audio.duration){
+		audio.currentTime = (progress.value / 100) * audio.duration;
+	}
+});
+
+/* ===============================
+   KEYBOARD SHORTCUTS
+================================ */
+
+document.addEventListener("keydown", (e) => {
+	// while locked, let numeric keys type into the pin
+	if(lockscreen.style.display !== "none"){
+		if(/^[0-9]$/.test(e.key)){
+			pinInput.value += e.key;
+			pinInput.dispatchEvent(new Event("input"));
+		} else if(e.key === "Backspace"){
+			pinInput.value = pinInput.value.slice(0, -1);
+			pinInput.dispatchEvent(new Event("input"));
+		}
+		return;
+	}
+
+	switch(e.key){
+		case " ":
+			e.preventDefault();
+			togglePlay();
+			break;
+		case "ArrowRight":
+			playNext();
+			break;
+		case "ArrowLeft":
+			playPrev();
+			break;
+		case "ArrowUp":
+			e.preventDefault();
+			audio.volume = Math.min(1, audio.volume + 0.1);
+			break;
+		case "ArrowDown":
+			e.preventDefault();
+			audio.volume = Math.max(0, audio.volume - 0.1);
+			break;
+	}
 });
