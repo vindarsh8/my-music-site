@@ -3,154 +3,247 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>My Music</title>
+
+  <link rel="icon" href="covers/album-cover.jpg">
+
+  <meta property="og:title" content="My Music">
+  <meta property="og:description" content="Unreleased demos • private listening">
+  <meta property="og:image" content="covers/album-cover.jpg">
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Inter, Arial, sans-serif;
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Inter,Arial,sans-serif;
     }
 
-    body {
-      background: #0a0a0a;
-      color: white;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      padding: 40px 20px;
+    body{
+      background:linear-gradient(180deg,#181818,#090909);
+      color:white;
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      padding:50px 20px;
     }
 
-    .container {
-      width: 100%;
-      max-width: 420px;
-      text-align: center;
+    .container{
+      width:100%;
+      max-width:430px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:22px;
     }
 
-    .cover {
-      width: 100%;
-      max-width: 220px;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 18px;
-      margin-bottom: 22px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    .cover{
+      width:260px;
+      height:260px;
+      object-fit:cover;
+      border-radius:20px;
+      box-shadow:0 18px 45px rgba(0,0,0,.45);
     }
 
-    h1 {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 8px;
+    h1{
+      font-size:32px;
+      font-weight:700;
+      letter-spacing:.5px;
     }
 
-    .subtitle {
-      color: #9a9a9a;
-      font-size: 14px;
-      margin-bottom: 32px;
+    .subtitle{
+      color:#999;
+      font-size:14px;
+      margin-top:-12px;
     }
 
-    .track-card {
-      background: #141414;
-      border: 1px solid #222;
-      border-radius: 18px;
-      padding: 22px;
-      text-align: left;
+    .track-card{
+      width:100%;
+      background:#141414;
+      border:1px solid #222;
+      border-radius:18px;
+      padding:20px;
+      transition:.25s ease;
     }
 
-    .track-title {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 14px;
+    .track-card:hover{
+      transform:translateY(-5px);
+      border-color:#444;
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
     }
 
-    audio {
-      width: 100%;
-      border-radius: 12px;
+    .track-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:14px;
+      font-size:17px;
+      font-weight:600;
     }
 
-    .links {
-      margin-top: 30px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
+    .track-title span{
+      color:#888;
+      font-size:13px;
+      font-weight:400;
     }
 
-    .links a {
-      color: #bdbdbd;
-      text-decoration: none;
-      font-size: 14px;
-      transition: 0.2s;
+    audio{
+      width:100%;
+      border-radius:12px;
     }
 
-    .links a:hover {
-      color: white;
+    .links{
+      margin-top:10px;
+      display:flex;
+      gap:25px;
+      flex-wrap:wrap;
+      justify-content:center;
+      padding-bottom:30px;
+    }
+
+    .links a{
+      color:#9c9c9c;
+      text-decoration:none;
+      font-size:14px;
+      transition:.2s;
+    }
+
+    .links a:hover{
+      color:white;
+    }
+
+    @media(max-width:500px){
+
+      .cover{
+        width:220px;
+        height:220px;
+      }
+
+      h1{
+        font-size:28px;
+      }
+
     }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <img src="covers/album-cover.jpg" alt="Album Cover" class="cover" />
 
-    <h1>My Music</h1>
-    <p class="subtitle">unreleased demos • private listening</p>
+<div class="container">
 
-    <div class="track-card">
-      <div class="track-title">demo 2</div>
-      <audio controls>
-        <source src="songs/demo 2.mp3" type="audio/mpeg" />
-        Your browser does not support the audio player.
-      </audio>
-    </div>
+<img src="covers/album-cover.jpg" class="cover" alt="Album Cover">
+
+<h1>My Music</h1>
+
+<p class="subtitle">unreleased demos • private listening</p>
 
 
+<div class="track-card">
+<div class="track-title">
+demo 2
+<span></span>
+</div>
 
-     <div class="track-card">
-      <div class="track-title">sad song</div>
-      <audio controls>
-        <source src="songs/New_Project (10).mp3" type="audio/mpeg" />
-        Your browser does not support the audio player.
-      </audio>
-    </div>
+<audio controls>
+<source src="songs/demo 2.mp3" type="audio/mpeg">
+Your browser doesn't support audio.
+</audio>
+</div>
 
-      <div class="track-card">
-      <div class="track-title">ukelele demo</div>
-      <audio controls>
-        <source src="songs/ukelele.mp3" type="audio/mpeg" />
-        Your browser does not support the audio player.
-      </audio>
-    </div>
-   
 
-    <div class="track-card">
-      <div class="track-title">guitar demo</div>
-      <audio controls>
-        <source src="songs/New_Project (12).mp3" type="audio/mpeg" />
-        Your browser does not support the audio player.
-      </audio>
-    </div>
-    
-     <div class="track-card">
-      <div class="track-title">demo 14/6/26</div>
-      <audio controls>
-        <source src="songs/root rock crunch.mp3" type="audio/mpeg" />
-        Your browser does not support the audio player.
-      </audio>
-    </div>
+<div class="track-card">
+<div class="track-title">
+sad song
+<span></span>
+</div>
 
-     <div class="track-card">
-      <div class="track-title">demo 27/6/26</div>
-      <audio controls>
-        <source src="songs/supernova demo2.mp3" type="audio/mpeg" />
-        Your browser does not support the audio player.
-      </audio>
-    </div>
-    
-    <div class="links">
-      <a href="#">Instagram</a>
-      <a href="#">Spotify</a>
-      <a href="#">YouTube</a>
-    </div>
-  </div>
+<audio controls>
+<source src="songs/New_Project (10).mp3" type="audio/mpeg">
+</audio>
+</div>
+
+
+<div class="track-card">
+<div class="track-title">
+ukulele demo
+<span></span>
+</div>
+
+<audio controls>
+<source src="songs/ukelele.mp3" type="audio/mpeg">
+</audio>
+</div>
+
+
+<div class="track-card">
+<div class="track-title">
+guitar demo
+<span></span>
+</div>
+
+<audio controls>
+<source src="songs/New_Project (12).mp3" type="audio/mpeg">
+</audio>
+</div>
+
+
+<div class="track-card">
+<div class="track-title">
+demo 14/6/26
+<span></span>
+</div>
+
+<audio controls>
+<source src="songs/root rock crunch.mp3" type="audio/mpeg">
+</audio>
+</div>
+
+
+<div class="track-card">
+<div class="track-title">
+demo 27/6/26
+<span></span>
+</div>
+
+<audio controls>
+<source src="songs/supernova demo2.mp3" type="audio/mpeg">
+</audio>
+</div>
+
+
+<div class="links">
+
+<a href="https://instagram.com/YOUR_USERNAME" target="_blank">
+Instagram
+</a>
+
+<a href="https://spotify.com" target="_blank">
+Spotify
+</a>
+
+<a href="https://youtube.com/@YOURCHANNEL" target="_blank">
+YouTube
+</a>
+
+</div>
+
+</div>
+
+
+<script>
+const players=document.querySelectorAll("audio");
+
+players.forEach(player=>{
+    player.addEventListener("play",()=>{
+        players.forEach(other=>{
+            if(other!==player){
+                other.pause();
+            }
+        });
+    });
+});
+</script>
+
 </body>
 </html>
