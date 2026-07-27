@@ -1,6 +1,6 @@
-/* ===========================================
-   APPLE MUSIC STYLE.CSS - PART 1
-   =========================================== */
+/* ===============================
+   RESET
+================================ */
 
 *{
 margin:0;
@@ -10,160 +10,97 @@ box-sizing:border-box;
 }
 
 html{
+
 scroll-behavior:smooth;
+
 }
 
 body{
+
 background:#000;
+
 color:#fff;
-font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
+
+font-family:
+-apple-system,
+BlinkMacSystemFont,
+"SF Pro Display",
+"Helvetica Neue",
+sans-serif;
+
 overflow-x:hidden;
-min-height:100vh;
-}
-
-/* ----------------------------- */
-/* BACKGROUND */
-/* ----------------------------- */
-
-.background{
-position:fixed;
-inset:0;
-pointer-events:none;
-overflow:hidden;
-}
-
-.background::before{
-content:"";
-position:absolute;
-width:900px;
-height:900px;
-border-radius:50%;
-left:50%;
-top:50%;
-transform:translate(-50%,-50%);
-background:
-radial-gradient(circle,
-rgba(255,255,255,.06),
-transparent 70%);
-filter:blur(80px);
-animation:glow 12s ease-in-out infinite;
-}
-
-@keyframes glow{
-
-0%{
-transform:translate(-50%,-50%) scale(1);
-}
-
-50%{
-transform:translate(-50%,-50%) scale(1.2);
-}
-
-100%{
-transform:translate(-50%,-50%) scale(1);
-}
 
 }
 
-/* ----------------------------- */
-/* LOCKSCREEN */
-/* ----------------------------- */
+/* ===============================
+LOCK SCREEN
+================================ */
 
 #lockscreen{
 
 position:fixed;
+
 inset:0;
 
 display:flex;
+
 justify-content:center;
+
 align-items:center;
 
 background:#000;
 
-z-index:999;
+z-index:9999;
 
 transition:.45s;
 
 }
 
-.lockBox{
+.lock-content{
 
-width:360px;
-max-width:92%;
-
-padding:45px;
-
-border-radius:34px;
-
-background:
-
-rgba(255,255,255,.05);
-
-backdrop-filter:blur(28px);
-
-border:1px solid rgba(255,255,255,.08);
-
-box-shadow:
-
-0 25px 80px rgba(0,0,0,.55);
+width:320px;
 
 text-align:center;
 
-animation:appear .8s ease;
-
 }
 
-@keyframes appear{
+.lock-content h1{
 
-from{
-
-opacity:0;
-transform:translateY(30px);
-
-}
-
-to{
-
-opacity:1;
-transform:translateY(0);
-
-}
-
-}
-
-.lockIcon{
-
-font-size:56px;
-
-margin-bottom:22px;
-
-}
-
-.lockBox h1{
-
-font-size:34px;
+font-size:36px;
 
 font-weight:700;
 
-margin-bottom:10px;
-
 letter-spacing:-1px;
+
+margin-bottom:10px;
 
 }
 
-.lockBox p{
+.lock-content p{
 
-color:#9d9d9d;
+color:#8d8d8d;
+
+margin-bottom:30px;
 
 font-size:15px;
 
-margin-bottom:34px;
-
 }
 
-/* ----------------------------- */
-/* PASSCODE */
-/* ----------------------------- */
+#error{
+
+height:20px;
+
+color:#ff5b5b;
+
+font-size:14px;
+
+margin-top:16px;
+
+opacity:0;
+
+transition:.25s;
+
+}
 
 #dots{
 
@@ -171,22 +108,23 @@ display:flex;
 
 justify-content:center;
 
-gap:18px;
+gap:16px;
 
-margin-bottom:24px;
+margin-bottom:20px;
 
 }
 
 .dot{
 
-width:18px;
-height:18px;
+width:16px;
+
+height:16px;
 
 border-radius:50%;
 
-border:2px solid rgba(255,255,255,.6);
+border:2px solid #666;
 
-transition:.25s;
+transition:.2s;
 
 }
 
@@ -195,24 +133,6 @@ transition:.25s;
 background:#fff;
 
 border-color:#fff;
-
-transform:scale(1.1);
-
-}
-
-#wrong{
-
-height:18px;
-
-font-size:14px;
-
-color:#ff5f5f;
-
-opacity:0;
-
-transition:.25s;
-
-margin-bottom:12px;
 
 }
 
@@ -226,50 +146,27 @@ pointer-events:none;
 
 }
 
-/* ----------------------------- */
-/* SHAKE */
-/* ----------------------------- */
+/* ===============================
+APP
+================================ */
 
-.shake{
-
-animation:shake .45s;
-
-}
-
-@keyframes shake{
-
-0%{transform:translateX(0);}
-20%{transform:translateX(-12px);}
-40%{transform:translateX(12px);}
-60%{transform:translateX(-10px);}
-80%{transform:translateX(10px);}
-100%{transform:translateX(0);}
-
-}
-
-/* ----------------------------- */
-/* PAGE */
-/* ----------------------------- */
-
-#page{
-
-opacity:0;
-
-pointer-events:none;
-
-transition:.6s;
+#app{
 
 max-width:520px;
 
 margin:auto;
 
-padding:50px 20px 90px;
+padding:60px 22px 180px;
+
+opacity:0;
+
+transition:.5s;
 
 }
 
-/* ----------------------------- */
-/* HEADER */
-/* ----------------------------- */
+/* ===============================
+HEADER
+================================ */
 
 header{
 
@@ -279,473 +176,128 @@ margin-bottom:50px;
 
 }
 
-.cover{
+header h1{
 
-width:240px;
-
-height:240px;
-
-margin:auto;
-
-border-radius:28px;
-
-overflow:hidden;
-
-box-shadow:
-
-0 25px 80px rgba(0,0,0,.65);
-
-animation:float 8s ease-in-out infinite;
-
-}
-
-.cover img{
-
-width:100%;
-height:100%;
-
-object-fit:cover;
-
-display:block;
-
-}
-
-@keyframes float{
-
-0%{
-transform:translateY(0px);
-}
-
-50%{
-transform:translateY(-10px);
-}
-
-100%{
-transform:translateY(0px);
-}
-
-}
-
-header h2{
-
-font-size:38px;
+font-size:42px;
 
 font-weight:700;
 
-margin-top:28px;
-
 letter-spacing:-1px;
+
+margin-top:24px;
 
 }
 
 header p{
 
-margin-top:10px;
+color:#888;
 
-color:#9a9a9a;
+margin-top:8px;
 
 font-size:15px;
 
 }
-/* ===========================================
-   APPLE MUSIC STYLE.CSS - PART 2
-   =========================================== */
 
-/* ----------------------------- */
-/* SONG LIST */
-/* ----------------------------- */
-
-#songs{
-    display:flex;
-    flex-direction:column;
-    gap:18px;
-}
-
-.song{
-    position:relative;
-    padding:22px;
-    border-radius:24px;
-
-    background:rgba(255,255,255,.05);
-
-    border:1px solid rgba(255,255,255,.07);
-
-    backdrop-filter:blur(22px);
-
-    transition:
-        transform .28s ease,
-        background .28s ease,
-        border-color .28s ease,
-        box-shadow .28s ease;
-
-    opacity:0;
-    transform:translateY(25px);
-}
-
-.song.show{
-    opacity:1;
-    transform:translateY(0);
-}
-
-.song:hover{
-
-    transform:translateY(-5px);
-
-    background:rgba(255,255,255,.075);
-
-    border-color:rgba(255,255,255,.15);
-
-    box-shadow:
-        0 18px 40px rgba(0,0,0,.35);
-
-}
-
-.song::before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    border-radius:24px;
-
-    pointer-events:none;
-
-    background:
-
-    linear-gradient(
-        135deg,
-        rgba(255,255,255,.04),
-        transparent 40%
-    );
-
-}
-
-.song h3{
-
-    font-size:21px;
-
-    font-weight:600;
-
-    margin-bottom:14px;
-
-    letter-spacing:-0.3px;
-
-}
-
-.song span{
-
-    color:#8d8d8d;
-
-    font-size:13px;
-
-}
-
-/* ----------------------------- */
-/* AUDIO PLAYER */
-/* ----------------------------- */
-
-audio{
-
-    width:100%;
-
-    margin-top:8px;
-
-    border-radius:12px;
-
-    outline:none;
-
-    filter:
-        brightness(.95);
-
-}
-
-/* ----------------------------- */
-/* SCROLLBAR */
-/* ----------------------------- */
-
-::-webkit-scrollbar{
-    width:8px;
-}
-
-::-webkit-scrollbar-track{
-    background:#080808;
-}
-
-::-webkit-scrollbar-thumb{
-    background:#3d3d3d;
-    border-radius:50px;
-}
-
-::-webkit-scrollbar-thumb:hover{
-    background:#5b5b5b;
-}
-
-/* ----------------------------- */
-/* TEXT SELECTION */
-/* ----------------------------- */
-
-::selection{
-    background:#ffffff;
-    color:#000;
-}
-
-/* ----------------------------- */
-/* LINKS */
-/* ----------------------------- */
-
-a{
-    color:inherit;
-    text-decoration:none;
-}
-
-/* ----------------------------- */
-/* MOBILE */
-/* ----------------------------- */
-
-@media (max-width:700px){
-
-    .lockBox{
-
-        padding:36px 28px;
-
-    }
-
-    .lockBox h1{
-
-        font-size:30px;
-
-    }
-
-    .cover{
-
-        width:190px;
-        height:190px;
-
-    }
-
-    header h2{
-
-        font-size:31px;
-
-    }
-
-    .song{
-
-        padding:18px;
-
-        border-radius:20px;
-
-    }
-
-    .song h3{
-
-        font-size:18px;
-
-    }
-
-}
-
-@media (max-width:430px){
-
-    body{
-
-        font-size:15px;
-
-    }
-
-    #page{
-
-        padding:35px 15px 80px;
-
-    }
-
-    .cover{
-
-        width:170px;
-        height:170px;
-
-    }
-
-    .dot{
-
-        width:16px;
-        height:16px;
-
-    }
-
-}
-
-/* ----------------------------- */
-/* FADE IN */
-/* ----------------------------- */
-
-.fadeOut{
-
-    opacity:0 !important;
-
-    pointer-events:none;
-
-}
-
-.fadeIn{
-
-    opacity:1 !important;
-
-    pointer-events:auto !important;
-
-}
-/* ==========================================
-   VINYL RECORD
-========================================== */
+/* ===============================
+VINYL
+================================ */
 
 .vinyl-wrapper{
-    display:flex;
-    justify-content:center;
-    margin-bottom:30px;
+
+display:flex;
+
+justify-content:center;
+
 }
 
 #vinyl{
-    position:relative;
-    width:240px;
-    height:240px;
-    border-radius:50%;
-    background:
-        radial-gradient(circle at center,
-        #3d3d3d 0px,
-        #3d3d3d 18px,
-        #181818 19px,
-        #0f0f0f 42px,
-        #070707 100%);
-    box-shadow:
-        0 20px 45px rgba(0,0,0,.65),
-        inset 0 0 0 2px rgba(255,255,255,.03);
-}
 
-.ring{
-    position:absolute;
-    border:1px solid rgba(255,255,255,.035);
-    border-radius:50%;
-}
+position:relative;
 
-.ring1{
-    inset:18px;
-}
+width:240px;
 
-.ring2{
-    inset:42px;
-}
-
-.ring3{
-    inset:66px;
-}
-
-.label{
-    position:absolute;
-    width:58px;
-    height:58px;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
-    border-radius:50%;
-    background:#202020;
-    box-shadow:
-        inset 0 0 0 2px rgba(255,255,255,.04);
-}
-
-.label::after{
-    content:"";
-    position:absolute;
-    width:8px;
-    height:8px;
-    background:#e5e5e5;
-    border-radius:50%;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
-}
-
-.spinning{
-    animation:spin 8s linear infinite;
-}
-
-@keyframes spin{
-
-from{
-transform:rotate(0deg);
-}
-
-to{
-transform:rotate(360deg);
-}
-
-}
-/* ===========================
-   PLAYER
-=========================== */
-
-#player{
-
-position:fixed;
-
-left:0;
-right:0;
-bottom:0;
-
-padding:18px;
-
-background:#090909;
-
-border-top:1px solid rgba(255,255,255,.06);
-
-backdrop-filter:blur(30px);
-
-display:flex;
-
-flex-direction:column;
-
-gap:18px;
-
-z-index:100;
-
-}
-
-#playerInfo{
-
-display:flex;
-
-align-items:center;
-
-gap:18px;
-
-}
-
-#miniVinyl{
-
-width:56px;
-
-height:56px;
+height:240px;
 
 border-radius:50%;
 
 background:
+radial-gradient(circle,
+#2f2f2f 0,
+#2f2f2f 10px,
+#151515 12px,
+#0b0b0b 100%);
 
-radial-gradient(circle,#444 0,#444 6px,#222 8px,#0d0d0d 100%);
+box-shadow:
 
-position:relative;
+0 25px 60px rgba(0,0,0,.7),
 
-flex-shrink:0;
+inset 0 0 0 1px rgba(255,255,255,.04);
 
 }
 
-.miniLabel{
+.groove{
 
 position:absolute;
 
-width:12px;
+border-radius:50%;
 
-height:12px;
+border:1px solid rgba(255,255,255,.03);
+
+}
+
+.g1{
+
+inset:18px;
+
+}
+
+.g2{
+
+inset:42px;
+
+}
+
+.g3{
+
+inset:66px;
+
+}
+
+.g4{
+
+inset:90px;
+
+}
+
+.centre{
+
+position:absolute;
+
+width:58px;
+
+height:58px;
+
+left:50%;
+
+top:50%;
+
+transform:translate(-50%,-50%);
+
+background:#202020;
+
+border-radius:50%;
+
+}
+
+.centre::after{
+
+content:"";
+
+position:absolute;
+
+width:8px;
+
+height:8px;
 
 background:#ddd;
 
@@ -759,13 +311,182 @@ transform:translate(-50%,-50%);
 
 }
 
+.spinning{
+
+animation:spin 7s linear infinite;
+
+}
+
+@keyframes spin{
+
+from{
+
+transform:rotate(0deg);
+
+}
+
+to{
+
+transform:rotate(360deg);
+
+}
+
+}
+/* ===============================
+SONG LIST
+================================ */
+
+#songs{
+display:flex;
+flex-direction:column;
+gap:4px;
+}
+
+.song{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 14px;
+border-radius:16px;
+cursor:pointer;
+transition:.2s;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.song:hover{
+background:#111;
+}
+
+.song.active{
+background:#171717;
+}
+
+.song h3{
+font-size:18px;
+font-weight:600;
+margin-bottom:4px;
+}
+
+.song p{
+font-size:13px;
+color:#8a8a8a;
+}
+
+/* ===============================
+PLAYER
+================================ */
+
+#player{
+
+position:fixed;
+
+left:0;
+right:0;
+bottom:0;
+
+padding:20px;
+
+background:#090909;
+
+border-top:1px solid rgba(255,255,255,.06);
+
+backdrop-filter:blur(20px);
+
+display:flex;
+flex-direction:column;
+gap:18px;
+
+}
+
+#playerTop{
+
+display:flex;
+align-items:center;
+gap:16px;
+
+}
+
+#miniVinyl{
+
+width:52px;
+height:52px;
+
+border-radius:50%;
+
+background:
+radial-gradient(circle,
+#333 0,
+#333 6px,
+#161616 8px,
+#090909 100%);
+
+position:relative;
+
+flex-shrink:0;
+
+}
+
+.miniCentre{
+
+position:absolute;
+
+left:50%;
+top:50%;
+
+transform:translate(-50%,-50%);
+
+width:10px;
+height:10px;
+
+border-radius:50%;
+
+background:#ddd;
+
+}
+
+.rotate{
+
+animation:spin 7s linear infinite;
+
+}
+
+#songInfo{
+
+flex:1;
+
+}
+
+#currentTitle{
+
+font-size:17px;
+
+font-weight:600;
+
+margin-bottom:2px;
+
+}
+
+#songInfo p{
+
+font-size:13px;
+
+color:#888;
+
+}
+
+/* ===============================
+BUTTONS
+================================ */
+
 #controls{
 
 display:flex;
 
 justify-content:center;
 
-gap:22px;
+align-items:center;
+
+gap:28px;
 
 }
 
@@ -775,11 +496,11 @@ background:none;
 
 border:none;
 
+cursor:pointer;
+
 color:white;
 
-font-size:28px;
-
-cursor:pointer;
+opacity:.9;
 
 transition:.2s;
 
@@ -789,21 +510,47 @@ transition:.2s;
 
 transform:scale(1.12);
 
+opacity:1;
+
 }
 
 #play{
 
-font-size:38px;
+width:58px;
+height:58px;
+
+border-radius:50%;
+
+background:white;
+
+color:black;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
 
 }
 
-#progressContainer{
+#play svg{
+
+width:26px;
+height:26px;
+
+}
+
+/* ===============================
+PROGRESS
+================================ */
+
+#progressArea{
 
 display:flex;
 
 align-items:center;
 
-gap:14px;
+gap:10px;
 
 }
 
@@ -811,32 +558,39 @@ gap:14px;
 
 flex:1;
 
-accent-color:white;
+height:4px;
+
+appearance:none;
+
+background:#333;
+
+border-radius:99px;
+
+outline:none;
 
 }
 
-#currentSong{
+#progress::-webkit-slider-thumb{
 
-font-size:18px;
+appearance:none;
 
-font-weight:600;
+width:12px;
+height:12px;
 
-}
+border-radius:50%;
 
-#player p{
+background:white;
 
-color:#888;
-
-font-size:13px;
+cursor:pointer;
 
 }
 
 #currentTime,
 #duration{
 
-font-size:13px;
+font-size:12px;
 
-color:#999;
+color:#8d8d8d;
 
 width:40px;
 
@@ -844,8 +598,41 @@ text-align:center;
 
 }
 
-.rotate{
+/* ===============================
+RESPONSIVE
+================================ */
 
-animation:spin 8s linear infinite;
+@media(max-width:600px){
+
+#app{
+
+padding:40px 16px 170px;
+
+}
+
+#vinyl{
+
+width:190px;
+height:190px;
+
+}
+
+header h1{
+
+font-size:34px;
+
+}
+
+.song{
+
+padding:16px 10px;
+
+}
+
+#player{
+
+padding:16px;
+
+}
 
 }
