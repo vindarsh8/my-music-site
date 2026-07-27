@@ -4,31 +4,25 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>My Music</title>
-
-<link rel="icon" href="covers/playlist-cover.png">
+<title>Untitled</title>
 
 <link rel="stylesheet" href="style.css">
+
+<link rel="icon" href="covers/vinyl.png">
 
 </head>
 
 <body>
 
-<!-- LOCK SCREEN -->
+<!-- ===========================
+LOCK SCREEN
+=========================== -->
 
 <div id="lockscreen">
 
-<div class="background"></div>
-
-<div class="lockBox">
-
-<div class="lockIcon">
-
-🔒
-
-</div>
+<div class="lock-content">
 
 <h1>Private Listening</h1>
 
@@ -43,7 +37,7 @@
 
 </div>
 
-<div id="wrong">
+<div id="error">
 
 Incorrect Passcode
 
@@ -60,25 +54,26 @@ autocomplete="off">
 
 </div>
 
+<!-- ===========================
+APP
+=========================== -->
 
-
-<!-- MUSIC PAGE -->
-
-<div id="page">
+<div id="app">
 
 <header>
 
 <div class="vinyl-wrapper">
 
-    <div id="vinyl">
+<div id="vinyl">
 
-        <div class="ring ring1"></div>
-        <div class="ring ring2"></div>
-        <div class="ring ring3"></div>
+<div class="groove g1"></div>
+<div class="groove g2"></div>
+<div class="groove g3"></div>
+<div class="groove g4"></div>
 
-        <div class="label"></div>
+<div class="centre"></div>
 
-    </div>
+</div>
 
 </div>
 
@@ -88,78 +83,115 @@ autocomplete="off">
 
 </header>
 
-
-
 <section id="songs">
 
-<div class="song" data-src="songs/demo 2.mp3">
-    <div>
-        <h3>demo 2</h3>
-        <p>Demo</p>
-    </div>
+<div class="song"
+data-title="demo 2"
+data-src="songs/demo 2.mp3">
+
+<div>
+
+<h3>demo 2</h3>
+
+<p>Demo</p>
+
 </div>
 
-<div class="song" data-src="songs/New_Project (10).mp3">
-    <div>
-        <h3>sad song</h3>
-        <p>Demo</p>
-    </div>
 </div>
 
-<div class="song" data-src="songs/ukelele.mp3">
-    <div>
-        <h3>ukulele demo</h3>
-        <p>Demo</p>
-    </div>
+<div class="song"
+data-title="sad song"
+data-src="songs/New_Project (10).mp3">
+
+<div>
+
+<h3>sad song</h3>
+
+<p>Demo</p>
+
 </div>
 
-<div class="song" data-src="songs/New_Project (12).mp3">
-    <div>
-        <h3>guitar demo</h3>
-        <p>Demo</p>
-    </div>
 </div>
 
-<div class="song" data-src="songs/root rock crunch.mp3">
-    <div>
-        <h3>demo 14/6/26</h3>
-        <p>Demo</p>
-    </div>
+<div class="song"
+data-title="ukulele demo"
+data-src="songs/ukelele.mp3">
+
+<div>
+
+<h3>ukulele demo</h3>
+
+<p>Demo</p>
+
 </div>
 
-<div class="song" data-src="songs/supernova demo2.mp3">
-    <div>
-        <h3>demo 27/6/26</h3>
-        <p>Demo</p>
-    </div>
+</div>
+
+<div class="song"
+data-title="guitar demo"
+data-src="songs/New_Project (12).mp3">
+
+<div>
+
+<h3>guitar demo</h3>
+
+<p>Demo</p>
+
+</div>
+
+</div>
+
+<div class="song"
+data-title="demo 14/6/26"
+data-src="songs/root rock crunch.mp3">
+
+<div>
+
+<h3>demo 14/6/26</h3>
+
+<p>Demo</p>
+
+</div>
+
+</div>
+
+<div class="song"
+data-title="demo 27/6/26"
+data-src="songs/supernova demo2.mp3">
+
+<div>
+
+<h3>demo 27/6/26</h3>
+
+<p>Demo</p>
+
+</div>
+
 </div>
 
 </section>
+<!-- ===========================
+BOTTOM PLAYER
+=========================== -->
 
-<!-- Bottom Player -->
+<footer id="player">
 
-<div id="player">
-
-    <div id="playerInfo">
+    <div id="playerTop">
 
         <div id="miniVinyl">
 
-            <div class="miniLabel"></div>
+            <div class="miniCentre"></div>
 
         </div>
 
-        <div>
+        <div id="songInfo">
 
-            <h3 id="currentSong">
-
+            <h2 id="currentTitle">
                 Select a song
-
-            </h3>
+            </h2>
 
             <p>
-
                 Private Listening
-
             </p>
 
         </div>
@@ -168,15 +200,33 @@ autocomplete="off">
 
     <div id="controls">
 
-        <button id="prev">⏮</button>
+        <button id="prev" aria-label="Previous Song">
 
-        <button id="play">▶</button>
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <path d="M6 5h2v14H6zm3 7 9 7V5z"/>
+            </svg>
 
-        <button id="next">⏭</button>
+        </button>
+
+        <button id="play" aria-label="Play">
+
+            <svg id="playIcon" viewBox="0 0 24 24" width="34" height="34" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+            </svg>
+
+        </button>
+
+        <button id="next" aria-label="Next Song">
+
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <path d="M16 5h2v14h-2zM7 5v14l9-7z"/>
+            </svg>
+
+        </button>
 
     </div>
 
-    <div id="progressContainer">
+    <div id="progressArea">
 
         <span id="currentTime">
 
@@ -185,11 +235,11 @@ autocomplete="off">
         </span>
 
         <input
-        id="progress"
-        type="range"
-        value="0"
-        min="0"
-        max="100">
+            type="range"
+            id="progress"
+            value="0"
+            min="0"
+            max="100">
 
         <span id="duration">
 
@@ -199,13 +249,13 @@ autocomplete="off">
 
     </div>
 
-</div>
+</footer>
 
 <audio id="audio"></audio>
 
 </div>
 
 <script src="script.js"></script>
-</body>
 
+</body>
 </html>
