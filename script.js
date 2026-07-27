@@ -151,17 +151,26 @@ players.forEach(player => {
 
     player.addEventListener("play", () => {
 
-        players.forEach(other => {
+    vinyl.classList.add("spinning");
 
-            if (other !== player) {
+    players.forEach(other => {
 
-                other.pause();
+        if (other !== player) {
 
-            }
+            other.pause();
 
-        });
+        }
 
     });
+
+});
+   player.addEventListener("pause", () => {
+
+    const playing = [...players].some(audio => !audio.paused);
+
+    if (!playing) {
+        vinyl.classList.remove("spinning");
+    }
 
 });
 
