@@ -145,43 +145,274 @@ function animateSongs() {
 // =========================
 // ONLY ONE AUDIO PLAYS
 // =========================
-const players = document.querySelectorAll("audio");
-const vinyl = document.getElementById("vinyl");
-players.forEach(player => {
+/* ===========================================
+   APPLE MUSIC PLAYER
+=========================================== */
 
-    player.addEventListener("play", () => {
+const songs = [...document.querySelectorAll(".song")];
+
+const audio = document.getElementById("audio");
+
+const playBtn = document.getElementById("play");
+const prevBtn = document.getElementById("prev");
+const nextBtn = document.getElementById("next");
+
+const progress = document.getElementById("progress");
+
+const currentTime = document.getElementById("currentTime");
+const duration = document.getElementById("duration");
+
+const currentSong = document.getElementById("currentSong");
+
+const vinyl = document.getElementById("vinyl");
+const miniVinyl = document.getElementById("miniVinyl");
+
+let currentIndex = -1;
+
+
+
+// -----------------------
+// LOAD SONG
+// -----------------------
+
+function loadSong(index){
+
+    currentIndex = index;
+
+    const song = songs[index];
+
+    audio.src = song.dataset.src;
+
+    currentSong.textContent =
+        song.querySelector("h3").textContent;
+
+    songs.forEach(s=>s.classList.remove("active"));
+
+    song.classList.add("active");
+
+}
+
+
+
+// -----------------------
+// PLAY
+// -----------------------
+
+function playSong(){
+
+    audio.play();
+
+    playBtn.textContent = "❚❚";
 
     vinyl.classList.add("spinning");
 
-    players.forEach(other => {
+    miniVinyl.classList.add("rotate");
 
-        if (other !== player) {
+}
 
-            other.pause();
 
-        }
 
-    });
+// -----------------------
+// PAUSE
+// -----------------------
 
-});
-   player.addEventListener("pause", () => {
+function pauseSong(){
 
-    const playing = [...players].some(audio => !audio.paused);
+    audio.pause();
 
-    if (!playing) {
-        vinyl.classList.remove("spinning");
+    playBtn.textContent = "▶";
+
+    vinyl.classList.remove("spinning");
+
+    miniVinyl.classList.remove("rotate");
+
+}
+
+
+
+// -----------------------
+// CLICK SONG
+// -----------------------
+
+songs.forEach((song,index)=>{
+
+    song.onclick=()=>{
+
+        loadSong(index);
+
+        playSong();
+
     }
 
 });
 
-// =========================
-// ESC TO RELOCK
-// =========================
-window.addEventListener("keydown", (e) => {
 
-    if (e.key === "Escape") {
 
-        location.reload();
+// -----------------------
+// PLAY BUTTON
+// -----------------------
+
+playBtn.onclick=()=>{
+
+    if(currentIndex===-1){
+
+        loadSong(0);
+
+    }
+
+    if(audio.paused){
+
+        playSong();
+
+    }else{
+
+        pauseSong();
+
+    }
+
+}
+
+
+
+// -----------------------
+// NEXT
+// -----------------------
+
+nextBtn.onclick=()=>{
+
+    currentIndex++;
+
+    if(currentIndex>=songs.length){
+
+        currentIndex=0;
+
+    }
+
+    loadSong(currentIndex);
+
+    playSong();
+
+}
+
+
+
+// -----------------------
+// PREVIOUS
+// -----------------------
+
+prevBtn.onclick=()=>{
+
+    currentIndex--;
+
+    if(currentIndex<0){
+
+        currentIndex=songs.length-1;
+
+    }
+
+    loadSong(currentIndex);
+
+    playSong();
+
+}
+
+
+
+// -----------------------
+// PROGRESS
+// -----------------------
+
+audio.addEventListener("timeupdate",()=>{
+
+    if(audio.duration){
+
+        progress.value=
+        audio.currentTime/audio.duration*100;
+
+        currentTime.textContent=format(audio.currentTime);
+
+        duration.textContent=format(audio.duration);
+
+    }
+
+});
+
+
+
+progress.oninput=()=>{
+
+    if(audio.duration){
+
+        audio.currentTime=
+        progress.value/100*audio.duration;
+
+    }
+
+}
+
+
+
+// -----------------------
+// FORMAT TIME
+// -----------------------
+
+function format(sec){
+
+    const m=Math.floor(sec/60);
+
+    const s=Math.floor(sec%60);
+
+    return `${m}:${s.toString().padStart(2,"0")}`;
+
+}
+
+
+
+// -----------------------
+// SONG ENDED
+// -----------------------
+
+audio.onended=()=>{
+
+    nextBtn.click();
+
+}
+
+
+
+// -----------------------
+// SPACEBAR
+// -----------------------
+
+window.addEventListener("keydown",(e)=>{
+
+    if(e.code==="Space"){
+
+        e.preventDefault();
+
+        playBtn.click();
+
+    }
+
+});
+
+
+
+// -----------------------
+// LEFT / RIGHT
+// -----------------------
+
+window.addEventListener("keydown",(e)=>{
+
+    if(e.key==="ArrowRight"){
+
+        nextBtn.click();
+
+    }
+
+    if(e.key==="ArrowLeft"){
+
+        prevBtn.click();
 
     }
 
