@@ -1,19 +1,4 @@
-/* ===============================
-   CONFIG
-================================ */
 
-// Change this to whatever 4-digit code you want
-const PASSCODE = "1234";
-
-/* ===============================
-   ELEMENT REFERENCES
-================================ */
-
-const lockscreen   = document.getElementById("lockscreen");
-const app          = document.getElementById("app");
-const pinInput     = document.getElementById("pin");
-const dots         = document.querySelectorAll(".dot");
-const errorMsg     = document.getElementById("error");
 
 const vinyl        = document.getElementById("vinyl");
 const miniVinyl    = document.getElementById("miniVinyl");
