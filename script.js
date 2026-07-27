@@ -1,52 +1,179 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0d0d0d;
-  color: white;
-  text-align: center;
+/* ===========================================
+   APPLE MUSIC SCRIPT.JS - PART 1
+   =========================================== */
+
+// =========================
+// CHANGE THIS TO YOUR PIN
+// =========================
+const PASSCODE = "0000";
+
+// =========================
+// ELEMENTS
+// =========================
+const pinInput = document.getElementById("pin");
+const dots = document.querySelectorAll(".dot");
+const lockscreen = document.getElementById("lockscreen");
+const page = document.getElementById("page");
+const wrong = document.getElementById("wrong");
+const lockBox = document.querySelector(".lockBox");
+
+// =========================
+// FOCUS INPUT
+// =========================
+window.addEventListener("load", () => {
+    pinInput.focus();
+});
+
+document.addEventListener("click", () => {
+    pinInput.focus();
+});
+
+// =========================
+// UPDATE DOTS
+// =========================
+function updateDots() {
+
+    dots.forEach(dot => {
+        dot.classList.remove("active");
+    });
+
+    for (let i = 0; i < pinInput.value.length; i++) {
+        dots[i].classList.add("active");
+    }
+
 }
 
-.container {
-  max-width: 700px;
-  margin: auto;
-  padding: 40px 20px;
+// =========================
+// SHAKE ERROR
+// =========================
+function wrongPin() {
+
+    lockBox.classList.add("shake");
+
+    wrong.style.opacity = "1";
+
+    setTimeout(() => {
+
+        lockBox.classList.remove("shake");
+
+        wrong.style.opacity = "0";
+
+        pinInput.value = "";
+
+        updateDots();
+
+    }, 700);
+
 }
 
-.cover {
-  width: 250px;
-  border-radius: 20px;
-  margin-bottom: 20px;
+// =========================
+// UNLOCK
+// =========================
+function unlock() {
+
+    lockscreen.classList.add("fadeOut");
+
+    setTimeout(() => {
+
+        lockscreen.style.display = "none";
+
+        page.classList.add("fadeIn");
+
+        animateSongs();
+
+    }, 500);
+
 }
 
-h1 {
-  font-size: 36px;
-  margin-bottom: 10px;
+// =========================
+// CHECK PIN
+// =========================
+pinInput.addEventListener("input", () => {
+
+    pinInput.value = pinInput.value.replace(/\D/g, "");
+
+    updateDots();
+
+    if (pinInput.value.length === 4) {
+
+        if (pinInput.value === PASSCODE) {
+
+            unlock();
+
+        } else {
+
+            wrongPin();
+
+        }
+
+    }
+
+});
+
+// =========================
+// KEEP INPUT FOCUSED
+// =========================
+setInterval(() => {
+
+    if (document.activeElement !== pinInput) {
+
+        pinInput.focus();
+
+    }
+
+}, 500);
+
+// =========================
+// SONG ANIMATION
+// =========================
+function animateSongs() {
+
+    const songs = document.querySelectorAll(".song");
+
+    songs.forEach((song, index) => {
+
+        setTimeout(() => {
+
+            song.classList.add("show");
+
+        }, index * 120);
+
+    });
+
 }
 
-.bio {
-  color: #aaa;
-  margin-bottom: 30px;
-}
+// =========================
+// ONLY ONE AUDIO PLAYS
+// =========================
+const players = document.querySelectorAll("audio");
 
-.track {
-  margin: 30px 0;
-}
+players.forEach(player => {
 
-audio {
-  width: 100%;
-  max-width: 500px;
-}
+    player.addEventListener("play", () => {
 
-.socials {
-  margin-top: 40px;
-}
+        players.forEach(other => {
 
-.socials a {
-  color: white;
-  text-decoration: none;
-  margin: 0 15px;
-}
+            if (other !== player) {
 
-.socials a:hover {
-  color: #888;
-}
+                other.pause();
+
+            }
+
+        });
+
+    });
+
+});
+
+// =========================
+// ESC TO RELOCK
+// =========================
+window.addEventListener("keydown", (e) => {
+
+    if (e.key === "Escape") {
+
+        location.reload();
+
+    }
+
+});
