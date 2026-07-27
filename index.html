@@ -1,237 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Music</title>
 
-  <title>My Music</title>
+<link rel="icon" href="covers/album-cover.jpg">
 
-  <link rel="icon" href="covers/album-cover.jpg">
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,Arial,sans-serif;
+}
 
-  <meta property="og:title" content="My Music">
-  <meta property="og:description" content="Unreleased demos • private listening">
-  <meta property="og:image" content="covers/album-cover.jpg">
+body{
+    background:#0a0a0a;
+    color:white;
+    min-height:100vh;
+}
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:Inter,Arial,sans-serif;
-    }
+#lockscreen{
+    position:fixed;
+    inset:0;
+    background:#0a0a0a;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
 
-    body{
-      background:linear-gradient(180deg,#181818,#090909);
-      color:white;
-      min-height:100vh;
-      display:flex;
-      justify-content:center;
-      padding:50px 20px;
-    }
+.lock-box{
+    width:320px;
+    background:#141414;
+    border:1px solid #222;
+    border-radius:18px;
+    padding:30px;
+    text-align:center;
+}
 
-    .container{
-      width:100%;
-      max-width:430px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:22px;
-    }
+.lock-box h2{
+    margin-bottom:10px;
+}
 
-    .cover{
-      width:260px;
-      height:260px;
-      object-fit:cover;
-      border-radius:20px;
-      box-shadow:0 18px 45px rgba(0,0,0,.45);
-    }
+.lock-box p{
+    color:#888;
+    margin-bottom:20px;
+}
 
-    h1{
-      font-size:32px;
-      font-weight:700;
-      letter-spacing:.5px;
-    }
+.lock-box input{
+    width:100%;
+    padding:14px;
+    font-size:22px;
+    text-align:center;
+    border:none;
+    outline:none;
+    border-radius:10px;
+    background:#222;
+    color:white;
+    letter-spacing:6px;
+}
 
-    .subtitle{
-      color:#999;
-      font-size:14px;
-      margin-top:-12px;
-    }
+.lock-box button{
+    width:100%;
+    margin-top:18px;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:white;
+    color:black;
+    font-weight:600;
+    cursor:pointer;
+}
 
-    .track-card{
-      width:100%;
-      background:#141414;
-      border:1px solid #222;
-      border-radius:18px;
-      padding:20px;
-      transition:.25s ease;
-    }
+.error{
+    color:#ff6666;
+    margin-top:15px;
+    display:none;
+}
 
-    .track-card:hover{
-      transform:translateY(-5px);
-      border-color:#444;
-      box-shadow:0 10px 30px rgba(0,0,0,.35);
-    }
+#content{
+    display:none;
+}
 
-    .track-title{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:14px;
-      font-size:17px;
-      font-weight:600;
-    }
+.container{
+    width:100%;
+    max-width:430px;
+    margin:50px auto;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:22px;
+    padding:0 20px;
+}
 
-    .track-title span{
-      color:#888;
-      font-size:13px;
-      font-weight:400;
-    }
+.cover{
+    width:260px;
+    height:260px;
+    object-fit:cover;
+    border-radius:20px;
+    box-shadow:0 18px 45px rgba(0,0,0,.45);
+}
 
-    audio{
-      width:100%;
-      border-radius:12px;
-    }
+h1{
+    font-size:32px;
+}
 
-    .links{
-      margin-top:10px;
-      display:flex;
-      gap:25px;
-      flex-wrap:wrap;
-      justify-content:center;
-      padding-bottom:30px;
-    }
+.subtitle{
+    color:#999;
+    font-size:14px;
+}
 
-    .links a{
-      color:#9c9c9c;
-      text-decoration:none;
-      font-size:14px;
-      transition:.2s;
-    }
+.track-card{
+    width:100%;
+    background:#141414;
+    border:1px solid #222;
+    border-radius:18px;
+    padding:20px;
+    transition:.25s;
+}
 
-    .links a:hover{
-      color:white;
-    }
+.track-card:hover{
+    transform:translateY(-4px);
+    border-color:#444;
+}
 
-    @media(max-width:500px){
+.track-title{
+    font-size:17px;
+    font-weight:600;
+    margin-bottom:15px;
+}
 
-      .cover{
-        width:220px;
-        height:220px;
-      }
-
-      h1{
-        font-size:28px;
-      }
-
-    }
-  </style>
+audio{
+    width:100%;
+}
+</style>
 </head>
 
 <body>
 
+<div id="lockscreen">
+    <div class="lock-box">
+        <h2>Private Listening</h2>
+        <p>Enter the 4-digit PIN</p>
+
+        <input
+            type="password"
+            maxlength="4"
+            id="pin"
+            inputmode="numeric"
+            placeholder="••••">
+
+        <button onclick="unlock()">Unlock</button>
+
+        <div class="error" id="error">
+            Incorrect PIN
+        </div>
+    </div>
+</div>
+
+<div id="content">
+
 <div class="container">
 
-<img src="covers/album-cover.jpg" class="cover" alt="Album Cover">
+<img src="covers/album-cover.jpg" class="cover">
 
 <h1>My Music</h1>
 
 <p class="subtitle">unreleased demos • private listening</p>
 
-
 <div class="track-card">
-<div class="track-title">
-demo 2
-<span></span>
-</div>
-
+<div class="track-title">demo 2</div>
 <audio controls>
-<source src="songs/demo 2.mp3" type="audio/mpeg">
-Your browser doesn't support audio.
+<source src="songs/demo 2.mp3">
 </audio>
 </div>
 
-
 <div class="track-card">
-<div class="track-title">
-sad song
-<span></span>
-</div>
-
+<div class="track-title">sad song</div>
 <audio controls>
-<source src="songs/New_Project (10).mp3" type="audio/mpeg">
+<source src="songs/New_Project (10).mp3">
 </audio>
 </div>
 
-
 <div class="track-card">
-<div class="track-title">
-ukulele demo
-<span></span>
-</div>
-
+<div class="track-title">ukulele demo</div>
 <audio controls>
-<source src="songs/ukelele.mp3" type="audio/mpeg">
+<source src="songs/ukelele.mp3">
 </audio>
 </div>
 
-
 <div class="track-card">
-<div class="track-title">
-guitar demo
-<span></span>
-</div>
-
+<div class="track-title">guitar demo</div>
 <audio controls>
-<source src="songs/New_Project (12).mp3" type="audio/mpeg">
+<source src="songs/New_Project (12).mp3">
 </audio>
 </div>
 
-
 <div class="track-card">
-<div class="track-title">
-demo 14/6/26
-<span></span>
-</div>
-
+<div class="track-title">demo 14/6/26</div>
 <audio controls>
-<source src="songs/root rock crunch.mp3" type="audio/mpeg">
+<source src="songs/root rock crunch.mp3">
 </audio>
 </div>
 
-
 <div class="track-card">
-<div class="track-title">
-demo 27/6/26
-<span></span>
-</div>
-
+<div class="track-title">demo 27/6/26</div>
 <audio controls>
-<source src="songs/supernova demo2.mp3" type="audio/mpeg">
+<source src="songs/supernova demo2.mp3">
 </audio>
 </div>
 
-
-<div class="links">
-
-<a href="https://instagram.com/YOUR_USERNAME" target="_blank">
-Instagram
-</a>
-
-<a href="https://spotify.com" target="_blank">
-Spotify
-</a>
-
-<a href="https://youtube.com/@YOURCHANNEL" target="_blank">
-YouTube
-</a>
-
 </div>
 
 </div>
-
 
 <script>
+// CHANGE THIS TO YOUR OWN 4-DIGIT PIN
+const PASSWORD = "1234";
+
+function unlock(){
+    const pin=document.getElementById("pin").value;
+
+    if(pin===PASSWORD){
+        document.getElementById("lockscreen").style.display="none";
+        document.getElementById("content").style.display="block";
+    }else{
+        document.getElementById("error").style.display="block";
+        document.getElementById("pin").value="";
+    }
+}
+
+document.getElementById("pin").addEventListener("keypress",function(e){
+    if(e.key==="Enter"){
+        unlock();
+    }
+});
+
 const players=document.querySelectorAll("audio");
 
 players.forEach(player=>{
