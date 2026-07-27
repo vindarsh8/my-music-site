@@ -3,7 +3,7 @@
 ================================ */
 
 // Change this to whatever 4-digit code you want
-const PASSCODE = "0000";
+const PASSCODE = "1234";
 
 /* ===============================
    ELEMENT REFERENCES
@@ -192,6 +192,7 @@ function loadSong(index, autoplay = true){
 	song.el.classList.add("active");
 
 	progress.value = 0;
+	progress.style.setProperty("--pct", "0%");
 	currentTime.textContent = "0:00";
 	duration.textContent = "0:00";
 
@@ -200,11 +201,19 @@ function loadSong(index, autoplay = true){
 	}
 }
 
+function setNowPlayingIndicator(playing){
+	songEls.forEach(el => el.classList.remove("is-playing"));
+	if(playing && currentIndex !== -1){
+		songs[currentIndex].el.classList.add("is-playing");
+	}
+}
+
 function playAudio(){
 	audio.play().then(() => {
 		isPlaying = true;
 		setPlayIcon(true);
 		setSpinning(true);
+		setNowPlayingIndicator(true);
 	}).catch(() => {
 		// autoplay might be blocked, ignore
 	});
@@ -215,6 +224,7 @@ function pauseAudio(){
 	isPlaying = false;
 	setPlayIcon(false);
 	setSpinning(false);
+	setNowPlayingIndicator(false);
 }
 
 function togglePlay(){
@@ -273,6 +283,7 @@ audio.addEventListener("timeupdate", () => {
 	if(audio.duration){
 		const percent = (audio.currentTime / audio.duration) * 100;
 		progress.value = percent;
+		progress.style.setProperty("--pct", `${percent}%`);
 	}
 	currentTime.textContent = formatTime(audio.currentTime);
 });
@@ -286,6 +297,7 @@ audio.addEventListener("ended", () => {
 ================================ */
 
 progress.addEventListener("input", () => {
+	progress.style.setProperty("--pct", `${progress.value}%`);
 	if(audio.duration){
 		audio.currentTime = (progress.value / 100) * audio.duration;
 	}
