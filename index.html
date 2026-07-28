@@ -615,3 +615,20 @@ document.getElementById("pin").addEventListener("keydown", function(e){
     }
 
 });
+    document.getElementById("pin").addEventListener("input", function () {
+
+    this.value = this.value.replace(/\D/g, "");
+
+});
+
+window.addEventListener("load", () => {
+
+    document.getElementById("pin").focus();
+
+});
+
+</script>
+
+</body>
+
+</html>
