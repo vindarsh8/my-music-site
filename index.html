@@ -190,8 +190,40 @@ height:220px;
 
 <body>
 
+<div id="lockscreen">
 
-<div class="container">
+    <div class="login-window">
+
+        <div class="titlebar">
+            My Music.exe
+        </div>
+
+        <div class="login-content">
+
+            <h2>PRIVATE DEMOS</h2>
+
+            <p>Enter Access Code</p>
+
+            <input
+                type="password"
+                maxlength="4"
+                id="pin"
+                placeholder="••••">
+
+            <button onclick="unlock()">
+                OK
+            </button>
+
+            <p id="error"></p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="container" id="site" style="display:none;">
 
 
 <img src="covers/album-cover.jpg" class="cover" alt="Album Cover">
